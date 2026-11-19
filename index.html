@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Sertifikat Batch | Pembuatan & Generate Sertifikat Static</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace-main">Lewati ke area kerja</a>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">CS</span>
+        <div class="brand-text">
+          <span class="brand-name">CetakSertifikat</span>
+          <span class="brand-sub">Studio Batch Static</span>
+        </div>
+      </div>
+
+      <div class="topbar-meta" aria-live="polite">
+        <span class="meta-pill" id="summary-template">Template: Klasik Bingkai Emas</span>
+        <span class="meta-pill" id="summary-batch">Total: 9 peserta</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="stepper-bar" aria-label="Tahapan pembuatan sertifikat">
+    <div class="container">
+      <ol class="stepper-list" id="stepper-list">
+        <li>
+          <button type="button" class="step-btn is-active" data-step="1" aria-current="step">
+            <span class="step-num">1</span>
+            <span class="step-label">Upload Template</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step-btn" data-step="2">
+            <span class="step-num">2</span>
+            <span class="step-label">Konfigurasi</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step-btn" data-step="3">
+            <span class="step-num">3</span>
+            <span class="step-label">Data Batch</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step-btn" data-step="4">
+            <span class="step-num">4</span>
+            <span class="step-label">Detail Sertifikat</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step-btn" data-step="5">
+            <span class="step-num">5</span>
+            <span class="step-label">Preview & Validasi</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step-btn" data-step="6">
+            <span class="step-num">6</span>
+            <span class="step-label">Generate & Unduh</span>
+          </button>
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="workspace-main" class="container workspace">
+    <div class="workspace-grid">
+      <!-- Kolom Kiri: Panel Langkah Aktif -->
+      <section class="panel-stage" aria-label="Pengaturan tahap aktif">
+        <div class="stage-header">
+          <p class="stage-kicker" id="stage-kicker">Tahap 1 dari 6</p>
+          <h1 class="stage-title" id="stage-title">Upload Template Sertifikat</h1>
+          <p class="stage-desc" id="stage-desc">Unggah gambar sertifikat (PNG, JPG, JPEG) atau pilih template bawaan dari daftar di bawah.</p>
+        </div>
+
+        <!-- TAHAP 1: UPLOAD TEMPLATE -->
+        <div class="step-panel is-active" id="step-1" role="region" aria-labelledby="stage-title">
+          <div class="field-group">
+            <label for="preset-dropdown" class="field-label">Pilih Template Tersedia</label>
+            <select id="preset-dropdown" class="select-input">
+              <option value="preset-classic">Template Bawaan: Klasik Bingkai Emas</option>
+              <option value="preset-navy">Template Bawaan: Minimalis Modern Navy</option>
+              <option value="preset-academic">Template Bawaan: Akademik Formal</option>
+              <option value="preset-workshop">Template Bawaan: Workshop Kreatif</option>
+              <option value="custom" id="custom-template-option" disabled>Template Upload Anda (Belum diunggah)</option>
+            </select>
+          </div>
+
+          <div class="dropzone" id="template-dropzone" tabindex="0" role="button" aria-label="Area unggah gambar template sertifikat PNG, JPG, atau JPEG">
+            <input type="file" id="template-file-input" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden>
+            <div class="dropzone-body">
+              <svg class="dropzone-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M12 16V4m0 0l-4 4m4-4l4 4"/>
+                <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+              </svg>
+              <p class="dropzone-title">Tarik dan lepaskan gambar sertifikat di sini</p>
+              <p class="dropzone-hint">Format yang didukung: PNG, JPG, JPEG (maksimal 10 MB)</p>
+              <button type="button" class="btn btn-secondary" id="btn-browse-template">Pilih File Gambar</button>
+            </div>
+          </div>
+
+          <div class="status-banner" id="upload-feedback" role="status" aria-live="polite" hidden></div>
+
+          <div class="uploaded-meta" id="uploaded-meta" hidden>
+            <div class="uploaded-thumb-wrap">
+              <img id="uploaded-thumb" alt="Pratinjau gambar template yang diunggah" width="120" height="85">
+            </div>
+            <div class="uploaded-info">
+              <p class="uploaded-name" id="uploaded-filename">-</p>
+              <p class="uploaded-dims" id="uploaded-dims">-</p>
+            </div>
+            <button type="button" class="btn btn-ghost" id="btn-remove-upload">Hapus Upload</button>
+          </div>
+        </div>
+
+        <!-- TAHAP 2: PILIH TEMPLATE & KONFIGURASI -->
+        <div class="step-panel" id="step-2" hidden>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label for="config-template" class="field-label">Template Aktif</label>
+              <select id="config-template" class="select-input">
+                <option value="preset-classic">Klasik Bingkai Emas</option>
+                <option value="preset-navy">Minimalis Modern Navy</option>
+                <option value="preset-academic">Akademik Formal</option>
+                <option value="preset-workshop">Workshop Kreatif</option>
+                <option value="custom" id="config-custom-option" disabled>Template Upload Sendiri</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="config-type" class="field-label">Jenis Sertifikat</label>
+              <select id="config-type" class="select-input">
+                <option value="Penghargaan">Sertifikat Penghargaan</option>
+                <option value="Pelatihan">Sertifikat Pelatihan / Workshop</option>
+                <option value="Kelulusan">Sertifikat Kelulusan</option>
+                <option value="Kehadiran">Sertifikat Kehadiran</option>
+                <option value="Kompetisi">Sertifikat Kompetisi / Juara</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="config-paper" class="field-label">Ukuran Kertas</label>
+              <select id="config-paper" class="select-input">
+                <option value="A4">A4 (297 x 210 mm)</option>
+                <option value="Letter">Letter (279 x 216 mm)</option>
+                <option value="F4">F4 / Folio (330 x 215 mm)</option>
+                <option value="A5">A5 (210 x 148 mm)</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <span class="field-label" id="orientation-label">Orientasi Kertas</span>
+              <div class="segmented-control" role="radiogroup" aria-labelledby="orientation-label">
+                <button type="button" class="seg-btn is-selected" data-orientation="landscape" aria-pressed="true">Landscape</button>
+                <button type="button" class="seg-btn" data-orientation="portrait" aria-pressed="false">Portrait</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <p class="info-box-title">Resolusi Cetak Kanvas</p>
+            <p class="info-box-text" id="canvas-resolution-info">A4 Landscape: 1754 x 1240 px (siap cetak 150 DPI)</p>
+          </div>
+        </div>
+
+        <!-- TAHAP 3: INPUT DATA BATCH -->
+        <div class="step-panel" id="step-3" hidden>
+          <div class="batch-header-row">
+            <div class="batch-tabs" id="batch-tabs" role="tablist" aria-label="Daftar Batch Peserta">
+              <!-- Diisi dinamis oleh JS: Batch 1, Batch 2, Batch 3 -->
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-add-batch">+ Tambah Batch</button>
+          </div>
+
+          <div class="batch-meta-bar">
+            <div class="field-group inline-field">
+              <label for="batch-name-input" class="field-label">Label Batch Aktif</label>
+              <input type="text" id="batch-name-input" class="text-input" placeholder="Misal: Gelombang Pagi">
+            </div>
+            <div class="batch-quick-actions">
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-load-sample">Isi Contoh Data</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-batch">Kosongkan Batch</button>
+            </div>
+          </div>
+
+          <div class="input-mode-tabs" role="tablist" aria-label="Metode input data peserta">
+            <button type="button" class="mode-tab is-active" data-input-mode="manual" role="tab" aria-selected="true">Input Manual</button>
+            <button type="button" class="mode-tab" data-input-mode="csv" role="tab" aria-selected="false">Impor CSV</button>
+          </div>
+
+          <!-- Input Manual -->
+          <form id="manual-entry-form" class="manual-form" novalidate>
+            <div class="form-grid-3">
+              <div class="field-group">
+                <label for="manual-name" class="field-label">Nama Lengkap Peserta</label>
+                <input type="text" id="manual-name" class="text-input" placeholder="Contoh: Nadia Kusuma" required>
+              </div>
+              <div class="field-group">
+                <label for="manual-role" class="field-label">Peran / Predikat</label>
+                <input type="text" id="manual-role" class="text-input" placeholder="Contoh: Peserta Terbaik">
+              </div>
+              <div class="field-group form-submit-wrap">
+                <button type="submit" class="btn btn-primary">Tambah ke Batch</button>
+              </div>
+            </div>
+            <p class="field-error" id="manual-error" role="alert" hidden></p>
+          </form>
+
+          <!-- Input CSV -->
+          <div id="csv-entry-panel" class="csv-panel" hidden>
+            <div class="csv-upload-row">
+              <label for="csv-file-input" class="btn btn-secondary">Pilih File .CSV</label>
+              <input type="file" id="csv-file-input" accept=".csv,text/csv" hidden>
+              <span class="csv-format-note">Format kolom: <code>Nama,Peran/Predikat</code> (satu baris per peserta)</span>
+            </div>
+            <div class="field-group">
+              <label for="csv-textarea" class="field-label">Atau tempel teks CSV langsung</label>
+              <textarea id="csv-textarea" class="textarea-input" rows="4" placeholder="Budi Santoso,Peserta&#10;Siti Aminah,Pembicara&#10;Raka Pratama,Juara 1"></textarea>
+            </div>
+            <div class="csv-actions">
+              <button type="button" class="btn btn-primary" id="btn-parse-csv">Masukkan ke Tabel Batch</button>
+              <span class="field-error" id="csv-error" role="alert" hidden></span>
+            </div>
+          </div>
+
+          <!-- Tabel Batch -->
+          <div class="table-section">
+            <div class="table-head-bar">
+              <h2 class="sub-title">Daftar Peserta (<span id="active-batch-count">0</span>)</h2>
+              <span class="table-hint">Klik sel pada tabel untuk mengubah langsung</span>
+            </div>
+
+            <div class="empty-state" id="batch-empty-state">
+              <p class="empty-title">Belum ada peserta di batch ini</p>
+              <p class="empty-desc">Tambahkan peserta melalui form manual di atas, impor CSV, atau klik "Isi Contoh Data".</p>
+            </div>
+
+            <div class="table-scroll" id="batch-table-wrap" hidden>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Nama Peserta</th>
+                    <th scope="col">Peran / Predikat</th>
+                    <th scope="col">No. Sertifikat</th>
+                    <th scope="col">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="batch-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAHAP 4: ATUR DETAIL SERTIFIKAT -->
+        <div class="step-panel" id="step-4" hidden>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label for="detail-org" class="field-label">Nama Lembaga / Penyelenggara</label>
+              <input type="text" id="detail-org" class="text-input" value="Lembaga Pelatihan Nusantara">
+            </div>
+            <div class="field-group">
+              <label for="detail-title" class="field-label">Judul Sertifikat</label>
+              <input type="text" id="detail-title" class="text-input" value="SERTIFIKAT PENGHARGAAN">
+            </div>
+            <div class="field-group">
+              <label for="detail-subtitle" class="field-label">Subjudul / Kalimat Pembuka</label>
+              <input type="text" id="detail-subtitle" class="text-input" value="Diberikan dengan hormat kepada:">
+            </div>
+            <div class="field-group">
+              <label for="detail-event" class="field-label">Keterangan Acara / Program</label>
+              <input type="text" id="detail-event" class="text-input" value="Atas partisipasi aktif dalam Kelas Desain Sistem & Dokumentasi 2026">
+            </div>
+            <div class="field-group">
+              <label for="detail-number-pattern" class="field-label">Pola Nomor Sertifikat</label>
+              <input type="text" id="detail-number-pattern" class="text-input" value="CERT/{BATCH}/{YYYY}/{NNN}">
+              <span class="field-hint">Token tersedia: <code>{BATCH}</code>, <code>{YYYY}</code>, <code>{NNN}</code></span>
+            </div>
+            <div class="field-group">
+              <label for="detail-date" class="field-label">Tanggal Terbit</label>
+              <input type="date" id="detail-date" class="text-input">
+            </div>
+            <div class="field-group">
+              <label for="detail-signer" class="field-label">Nama Penandatangan</label>
+              <input type="text" id="detail-signer" class="text-input" value="Dr. Hendra Wijaya, M.Kom.">
+            </div>
+            <div class="field-group">
+              <label for="detail-position" class="field-label">Jabatan Penandatangan</label>
+              <input type="text" id="detail-position" class="text-input" value="Direktur Program">
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <h2 class="sub-title">Tanda Tangan & Tata Letak Lanjutan</h2>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <span class="field-label" id="sig-label">Tanda Tangan Digital</span>
+              <div class="sig-controls">
+                <canvas id="signature-pad" class="sig-pad" width="280" height="100" aria-label="Area gambar tanda tangan"></canvas>
+                <div class="sig-btn-row">
+                  <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-sig">Bersihkan</button>
+                  <label for="sig-upload-input" class="btn btn-secondary btn-sm">Upload PNG</label>
+                  <input type="file" id="sig-upload-input" accept="image/png,image/jpeg" hidden>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-sliders">
+              <div class="field-group">
+                <label for="detail-font" class="field-label">Gaya Huruf Nama</label>
+                <select id="detail-font" class="select-input">
+                  <option value="serif">Klasik Serif (Cormorant Garamond)</option>
+                  <option value="sans">Modern Sans (Plus Jakarta Sans)</option>
+                  <option value="italic">Kaligrafi Miring Formal</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="detail-name-size" class="field-label">Ukuran Nama Peserta: <span id="val-name-size">62</span> px</label>
+                <input type="range" id="detail-name-size" min="36" max="92" value="62">
+              </div>
+
+              <div class="field-group">
+                <label for="detail-name-y" class="field-label">Posisi Vertikal Nama: <span id="val-name-y">48</span>%</label>
+                <input type="range" id="detail-name-y" min="32" max="66" value="48">
+              </div>
+
+              <div class="field-group checkbox-row">
+                <input type="checkbox" id="detail-show-seal" checked>
+                <label for="detail-show-seal">Tampilkan stempel & kode verifikasi di sudut sertifikat</label>
+              </div>
+
+              <div class="field-group checkbox-row">
+                <input type="checkbox" id="detail-show-watermark" checked>
+                <label for="detail-show-watermark">Pasang watermark pengaman (mencegah penyalahgunaan)</label>
+              </div>
+
+              <div id="watermark-options" class="watermark-subgroup">
+                <div class="field-group">
+                  <label for="detail-watermark-text" class="field-label">Teks Watermark</label>
+                  <input type="text" id="detail-watermark-text" class="text-input" value="CONTOH / SALINAN RESMI">
+                </div>
+                <div class="field-group">
+                  <label for="detail-watermark-opacity" class="field-label">Kerapatan Watermark: <span id="val-watermark-opacity">12</span>%</label>
+                  <input type="range" id="detail-watermark-opacity" min="5" max="35" value="12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAHAP 5: PREVIEW & VALIDASI -->
+        <div class="step-panel" id="step-5" hidden>
+          <div class="validation-card" id="validation-card">
+            <h2 class="sub-title">Checklist Validasi Sebelum Generate</h2>
+            <ul class="validation-list" id="validation-list">
+              <!-- Diisi otomatis oleh JS -->
+            </ul>
+          </div>
+
+          <div class="preview-navigator">
+            <div class="field-group inline-field">
+              <label for="preview-batch-select" class="field-label">Pilih Batch</label>
+              <select id="preview-batch-select" class="select-input"></select>
+            </div>
+            <div class="field-group inline-field">
+              <label for="preview-participant-select" class="field-label">Pilih Peserta</label>
+              <select id="preview-participant-select" class="select-input"></select>
+            </div>
+            <div class="nav-pair">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-prev-participant">Sebelumnya</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-next-participant">Berikutnya</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAHAP 6: GENERATE & DOWNLOAD -->
+        <div class="step-panel" id="step-6" hidden>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label for="export-scope" class="field-label">Cakupan Batch</label>
+              <select id="export-scope" class="select-input">
+                <option value="all">Semua Batch (Batch 1, 2, 3, dst.)</option>
+                <option value="active">Hanya Batch Aktif Saat Ini</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="export-format" class="field-label">Format File Gambar</label>
+              <select id="export-format" class="select-input">
+                <option value="png">PNG (Kualitas Tajam)</option>
+                <option value="jpeg">JPG (Ukuran Lebih Ringan)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="generate-action-bar">
+            <button type="button" class="btn btn-accent" id="btn-generate-all">Generate Semua Sertifikat</button>
+            <button type="button" class="btn btn-primary" id="btn-download-zip" disabled>Unduh Sekaligus (ZIP)</button>
+          </div>
+
+          <div class="progress-wrap" id="generate-progress-wrap" hidden>
+            <div class="progress-text-row">
+              <span id="generate-progress-label">Memproses sertifikat...</span>
+              <span id="generate-progress-pct">0%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="generate-progressbar">
+              <div class="progress-fill" id="generate-progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="status-banner" id="generate-error" role="alert" hidden></div>
+
+          <div class="generated-list-wrap">
+            <h2 class="sub-title">Hasil Sertifikat Siap Unduh (<span id="generated-count">0</span>)</h2>
+            <div class="empty-state" id="generated-empty-state">
+              <p class="empty-title">Belum ada sertifikat yang digenerate</p>
+              <p class="empty-desc">Klik tombol "Generate Semua Sertifikat" untuk merender file gambar tiap peserta.</p>
+            </div>
+            <ul class="generated-grid" id="generated-list" hidden></ul>
+          </div>
+        </div>
+
+        <footer class="stage-footer">
+          <button type="button" class="btn btn-secondary" id="btn-step-prev" disabled>Kembali</button>
+          <button type="button" class="btn btn-primary" id="btn-step-next">Lanjut ke Konfigurasi</button>
+        </footer>
+      </section>
+
+      <!-- Kolom Kanan: Kanvas Live Preview -->
+      <aside class="panel-preview" aria-label="Pratinjau langsung sertifikat">
+        <div class="preview-header">
+          <div>
+            <h2 class="preview-title">Pratinjau Kanvas</h2>
+            <p class="preview-sub" id="preview-caption">Menampilkan contoh peserta pertama</p>
+          </div>
+          <span class="preview-badge" id="preview-paper-badge">A4 Landscape</span>
+        </div>
+
+        <div class="canvas-frame">
+          <canvas id="cert-canvas" width="1754" height="1240" aria-label="Pratinjau desain sertifikat"></canvas>
+        </div>
+
+        <div class="preview-quick-bar">
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-download-single-preview">Unduh Pratinjau Ini (PNG)</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>CetakSertifikat Studio Static. Seluruh proses render dan pengemasan ZIP berjalan lokal di browser Anda.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
