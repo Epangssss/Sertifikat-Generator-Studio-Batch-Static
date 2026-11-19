@@ -1,82 +1,93 @@
-# CetakSertifikat: Studio Batch Static
+# 🎓 CetakSertifikat – Studio Batch Static
 
-Aplikasi web statis berbasis HTML5, CSS3, dan Vanilla JavaScript untuk merancang, mengelola data peserta multi-batch, serta mencetak sertifikat dalam resolusi tinggi langsung dari peramban tanpa memerlukan backend atau koneksi server.
+Aplikasi web sederhana untuk membuat sertifikat secara otomatis menggunakan template gambar dan data peserta berdasarkan batch.
 
----
+Dibuat menggunakan **HTML, CSS, dan Vanilla JavaScript** tanpa backend maupun database. Semua proses dilakukan langsung melalui browser.
 
-## Alur Kerja 6 Tahap
+![CetakSertifikat Preview](main.png)
 
-Aplikasi ini dirancang dengan antarmuka bertahap (stepper) yang terstruktur dan mudah diikuti:
+## ✨ Fitur Utama
 
-1. **Upload Template & Pilih Desain**
-   - Mendukung unggah template gambar sertifikat mandiri dalam format PNG, JPG, atau JPEG (hingga 10 MB) dengan fitur *drag & drop*.
-   - Menyediakan 4 template bawaan siap pakai:
-     - *Klasik Bingkai Emas*
-     - *Minimalis Modern Navy*
-     - *Akademik Formal*
-     - *Workshop Kreatif*
+- **Upload Template** – Mengunggah gambar sertifikat sendiri atau menggunakan template bawaan.
+- **Pilihan Desain** – Memilih jenis dan desain sertifikat melalui dropdown.
+- **Batch Management** – Mengelola peserta berdasarkan Batch 1, Batch 2, Batch 3, dan seterusnya.
+- **Input Data** – Menambahkan peserta secara manual, melalui tabel, atau import CSV.
+- **Pengaturan Sertifikat** – Mengatur nama lembaga, judul, tanggal, nomor sertifikat, dan tanda tangan.
+- **Live Preview** – Melihat hasil sertifikat sebelum diunduh.
+- **Generate Otomatis** – Membuat sertifikat untuk satu peserta, satu batch, atau seluruh batch.
+- **Download** – Mengunduh sertifikat dalam format PNG atau JPG, termasuk ZIP untuk banyak sertifikat.
+- **QR Code** – Menambahkan kode QR sebagai identitas sertifikat.
 
-2. **Pilih Template & Konfigurasi Kertas**
-   - Pengaturan template aktif.
-   - Pilihan jenis sertifikat: Penghargaan, Pelatihan, Kelulusan, Kehadiran, dan Kompetisi.
-   - Standar ukuran kertas: A4 (297 x 210 mm), Letter (279 x 216 mm), F4/Folio (330 x 215 mm), dan A5 (210 x 148 mm).
-   - Orientasi kertas fleksibel: Landscape dan Portrait dengan resolusi render kanvas siap cetak (150 DPI).
+## 🔄 Alur Penggunaan
 
-3. **Input Data Peserta Berbasis Batch (Batch 1, 2, 3+)**
-   - Manajemen peserta terpisah per gelombang atau kelompok (Batch 1, Batch 2, Batch 3, dan tombol tambah batch baru).
-   - Tiga metode input data:
-     - **Input Manual**: Form cepat nama lengkap dan peran/predikat.
-     - **Tabel Data Inline**: Nilai nama dan peran dapat disunting langsung di dalam sel tabel.
-     - **Impor CSV**: Unggah file `.csv` atau tempel teks berformat `Nama,Peran`.
-   - Disertai data dummy bawaan (3 peserta per batch) untuk mempermudah uji coba awal.
+1. **Upload Template** – Pilih gambar sertifikat yang ingin digunakan.
+2. **Pilih Desain** – Atur jenis sertifikat dan ukuran kertas.
+3. **Input Peserta** – Masukkan data peserta dan kelompokkan berdasarkan batch.
+4. **Atur Detail** – Sesuaikan nama, tanggal, nomor sertifikat, dan tanda tangan.
+5. **Preview** – Periksa hasil sertifikat sebelum dibuat.
+6. **Generate & Download** – Buat dan unduh sertifikat secara otomatis.
 
-4. **Atur Detail Sertifikat & Fitur Pengaman**
-   - Penyesuaian nama lembaga, judul sertifikat, subjudul, keterangan program/kegiatan, dan tanggal terbit.
-   - Penomoran otomatis dinamis dengan pola token: `{BATCH}`, `{YYYY}`, dan `{NNN}` (contoh: `CERT/B1/2026/001`).
-   - Tanda tangan digital: gambar langsung melalui *signature pad* kanvas atau unggah gambar stempel/tanda tangan PNG transparan.
-   - Tipografi nama peserta: pilihan font Serif, Sans-serif, atau Italic, dilengkapi slider ukuran dan posisi vertikal.
-   - **Stempel & Kode Verifikasi**: Stempel sudut dengan identitas nomor registrasi peserta.
-   - **Watermark Pengaman**: Melindungi sertifikat dari penyalahgunaan dengan teks diagonal yang dapat disesuaikan (contoh: *CONTOH / SALINAN RESMI*) serta pengatur transparansi (*opacity*).
+## 🛠️ Teknologi
 
-5. **Preview & Validasi Interaktif**
-   - Panel pratinjau kanvas *live* di sisi kanan layar yang langsung memperbarui tampilan setiap kali ada perubahan data.
-   - Checklist validasi sistem untuk memastikan kelengkapan data (template aktif, peserta tersedia, tanggal, dan nama penandatangan) sebelum proses generate.
-   - Navigasi pratinjau per batch dan per peserta (*Sebelumnya* / *Berikutnya*).
+| Teknologi | Kegunaan |
+|---|---|
+| HTML5 | Struktur halaman |
+| CSS3 | Tampilan aplikasi |
+| JavaScript | Logika aplikasi |
+| Canvas API | Membuat gambar sertifikat |
+| jsPDF | Export PDF (opsional) |
+| JSZip | Download ZIP (opsional) |
+| LocalStorage | Menyimpan data di browser |
 
-6. **Generate & Unduh (Satuan atau ZIP Sekaligus)**
-   - Pilihan cakupan ekspor: semua batch sekaligus atau hanya batch yang sedang aktif.
-   - Pilihan format berkas: PNG (kualitas tajam) atau JPG (ukuran lebih ringkas).
-   - Indikator progres render dengan persentase real-time.
-   - Unduh sertifikat satuan per peserta atau unduh seluruh berkas sekaligus dalam satu arsip ZIP.
-
----
-
-## Keunggulan Teknis
-
-- **100% Client-Side & Privat**: Seluruh proses render kanvas dan pembuatan arsip ZIP diproses langsung di peramban pengguna. Tidak ada data nama peserta atau dokumen yang dikirim ke server luar.
-- **Zero External Dependencies**: Kompresor ZIP dibangun menggunakan implementasi murni JavaScript (*ArrayBuffer & DataView*), sehingga aplikasi dapat berjalan secara offline tanpa pustaka eksternal pihak ketiga.
-- **Responsif & Aksesibel**: Tata letak fleksibel untuk desktop, tablet, dan ponsel dengan kontras warna memenuhi standar WCAG AA dan dukungan navigasi keyboard.
-
----
-
-## Struktur Berkas
+## 📁 Struktur Folder
 
 ```text
 generate-sertifikat/
-|-- index.html     # Halaman utama aplikasi (struktur 6 tahap alur & panel kanvas)
-|-- styles.css     # Sistem desain antarmuka (tema kertas & tinta, variabel warna, responsivitas)
-|-- app.js         # Logika aplikasi (kanvas renderer, batch state, ZIP builder, event listeners)
-`-- README.md      # Panduan dokumentasi proyek
+│
+├── index.html
+├── styles.css
+├── app.js
+├── assets/
+│   └── templates/
+├── main.png
+└── README.md
 ```
+
+## 🚀 Cara Menjalankan
+
+1. Clone repository:
+
+```bash
+git clone https://github.com/USERNAME/generate-sertifikat.git
+```
+
+2. Masuk ke folder project:
+
+```bash
+cd generate-sertifikat
+```
+
+3. Buka `index.html` menggunakan browser.
+
+Atau jalankan menggunakan server lokal:
+
+```bash
+python -m http.server 8000
+```
+
+Kemudian buka `http://localhost:8000`.
+
+## 🔒 Privasi
+
+- Tidak membutuhkan backend atau database.
+- Data peserta diproses langsung di browser.
+- Tidak mengirim data peserta ke server eksternal.
+- Data lokal dapat disimpan menggunakan browser.
+
+## 📌 Catatan
+
+Aplikasi ini dirancang untuk penggunaan lokal dan dapat dikembangkan lebih lanjut sesuai kebutuhan.
 
 ---
 
-## Cara Menjalankan
-
-1. Cukup buka berkas `index.html` langsung menggunakan peramban web modern (Google Chrome, Mozilla Firefox, Microsoft Edge, atau Safari).
-2. Atau jalankan melalui server lokal sederhana:
-   ```bash
-   # Menggunakan Python
-   python -m http.server 8000
-   ```
-   Lalu buka tautan `http://localhost:8000` pada peramban Anda.
+**CetakSertifikat** – Buat banyak sertifikat dengan lebih mudah dan praktis. 🎓
